@@ -4,7 +4,7 @@ import random
 from nltk.tokenize import WhitespaceTokenizer
 from collections import defaultdict
 
-file_name = r'D:\Python\TG\Text Generator\task\text_generator\corpus.txt'
+file_name = 'corpus.txt'
 with open(file_name, "r", encoding="utf-8") as f:
     var_file = f.read()
 tk = WhitespaceTokenizer()
