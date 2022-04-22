@@ -10,19 +10,6 @@ with open(file_name, "r", encoding="utf-8") as f:
 tk = WhitespaceTokenizer()
 tokenized_seq = tk.tokenize(var_file)
 
-set_up = set()
-punct_marks = '.?!'
-for i in range(len(tokenized_seq)):
-    if tokenized_seq[i][0].isupper() and tokenized_seq[i][-1] not in punct_marks:
-        set_up.add(tokenized_seq[i])
-
-
-def bigram(seq):
-    list_bigram = [] * (len(seq) - 1)
-    for i in range(len(seq) - 1):
-        list_bigram.append((seq[i], seq[i + 1]))
-    return list_bigram
-
 
 def trigram(seq):
     list_trigram = [] * (len(seq) - 2)
@@ -46,6 +33,7 @@ def print_dct(dct, key):
 
 def generate_sentence_trigrams(dct):
     first_word = random.choice(list(dct))
+    punct_marks = '.?!'
     while not first_word.split()[0].isupper() or first_word.split()[0][-1] in punct_marks:
         first_word = random.choice(list(dct))
     sentence = first_word.split()
@@ -53,11 +41,9 @@ def generate_sentence_trigrams(dct):
         second_word = random.choices(list(dct[first_word].keys()), weights=list(dct[first_word].values()))[0]
         sentence.append(second_word)
         first_word = ' '.join(' '.join(sentence).split()[-2:])
-        # print(sentence)
     return ' '.join(sentence)
 
 
-dct_bigrams = bigram(tokenized_seq)
 dct_trigrams = trigram(tokenized_seq)
 new_dct = reorg_ngrams(dct_trigrams)
 for _ in range(10):
